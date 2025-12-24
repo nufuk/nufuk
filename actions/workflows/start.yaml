@@ -1,0 +1,7 @@
+version: 1.0
+tasks:
+  testecho:
+    action: core.echo
+    input:
+      message: Hello World
+
