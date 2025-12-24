@@ -1,0 +1,27 @@
+---
+uid: rule:nufuk:test_rule
+name: test_rule
+ref: nufuk.start
+description: run every day every hour the start task
+pack: nufuk
+type:
+  ref: standard
+  parameters: {}
+trigger:
+  type: core.st2.CronTimer
+  parameters:
+    day: '*'
+    day_of_week: '*'
+    hour: '*'
+    minute: '0'
+    month: '*'
+    second: '0'
+    timezone: 'CET'
+    week: '*'
+    year: '*'
+  description: Triggers whenever current time matches the specified time constaints like a UNIX cron scheduler.
+criteria: {}
+action:
+  ref: nufuk.start
+  description: nufuk start
+enabled: true
