@@ -9,7 +9,7 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: {{ ctx(grafana_data) | to_json_string }}
+      message: <% ctx().grafana_data.replace('\'', '"') %>
     next:
       - do: restart_service
 
