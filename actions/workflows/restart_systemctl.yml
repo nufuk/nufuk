@@ -9,7 +9,7 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: {{ ctx().grafana_data.get("alerts") }}
+      message: {{ ctx().grafana_data.get("alerts").get("labels").get("instance") }}
     next:
       - do: restart_service
         publish:
