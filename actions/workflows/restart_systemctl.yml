@@ -9,7 +9,7 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: {{ ctx().grafana_data }}
+      message: <% ctx().grafana_data %>
     next:
       - do: next_print
         publish:
