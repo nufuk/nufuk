@@ -13,7 +13,7 @@ tasks:
     next:
       - do: restart_service
         publish:
-          - json_data: {{ ctx().grafana_data.get(0) }}
+          - json_data: {{ ctx().grafana_data.get("alerts") }}
 
   restart_service:
     action: core.remote_sudo
