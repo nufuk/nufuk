@@ -16,6 +16,6 @@ tasks:
   restart_service:
     action: core.remote_sudo
     input:
-      cmd: "systemctl restart <% ctx().grafana_data.to_json_common().alerts[0].labels.process_name.replace('_', '') %>"
+      cmd: "systemctl restart <% ctx().grafana_data.alerts.get(0).labels.process_name.replace('_', '') %>"
       hosts: <% ctx().grafana_data.to_json_common().alerts[0].labels.instance.split(':')[0] %>
       username: <% ctx(username) %>
