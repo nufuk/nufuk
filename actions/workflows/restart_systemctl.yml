@@ -13,7 +13,7 @@ tasks:
     next:
       - do: restart_service
         publish:
-          - json_data: "{{ ctx().grafana_data|replace(''',' \"')|tojson }}"
+          - json_data: {{ ctx().grafana_data|replace('\'',' "')|tojson }}
 
   restart_service:
     action: core.remote_sudo
