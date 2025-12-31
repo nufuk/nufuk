@@ -20,6 +20,6 @@ tasks:
     input:
       #cmd: "systemctl restart  <% ctx().grafana_data.alerts.get(0).labels.process_name.replace('_', '') %>"
       #hosts: <% ctx().grafana_data.to_json_common().alerts[0].labels.instance.split(':')[0] %>
-      hosts: {{ ctx().get('json_data').get('alerts').get('labels').get(instance) }}
+      hosts: {{ ctx().get('grafana_data').get('alerts').get('labels').get(instance) }}
       cmd: "systemctl restart  <% ctx(json_data).alerts[0].labels.process_name %>"
       username: <% ctx(username) %>
