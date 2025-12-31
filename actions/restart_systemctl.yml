@@ -1,5 +1,5 @@
 ---
-name: Restart systemctl
+name: restart_systemctl
 description: A workflow to restart services with systemctl
 runner_type: orquesta
 entry_point: workflows/restart_systemctl.yaml
