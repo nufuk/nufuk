@@ -19,5 +19,3 @@ parameters:
     required: true
     type: string
     default: TBD
-  json_data:
-    type: object
