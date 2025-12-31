@@ -5,6 +5,7 @@ input:
   - username
   - service
   - grafana_data
+  - json_data
 tasks:
   print_out_payload:
     action: core.echo
