@@ -15,6 +15,15 @@ tasks:
         publish:
           - json_data: <% ctx().grafana_data.replace('\'', '"') %>
 
+  next_print:
+    action: core.echo
+    input:
+      message: <% ctx(json_data) %>
+    next:
+      - do: restart_service
+        publish:
+          - json_stuff: <% ctx().json_data.to_json() %>
+
   restart_service:
     action: core.remote_sudo
     input:
