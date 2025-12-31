@@ -11,22 +11,15 @@ tasks:
     input:
       message: <% ctx().grafana_data %>
     next:
-      - do: next_print
+      - do: restart_service
         publish:
           - json_data: {{ ctx().grafana_data | tojson }}
-
-  next_print:
-  action: core.echo
-  input:
-    message: {{ ctx().get('json_data') }}
-  next:
-      - do: restart_service
 
   restart_service:
     action: core.remote_sudo
     input:
       #cmd: "systemctl restart  <% ctx().grafana_data.alerts.get(0).labels.process_name.replace('_', '') %>"
       #hosts: <% ctx().grafana_data.to_json_common().alerts[0].labels.instance.split(':')[0] %>
-      hosts: <% ctx(json_data).alerts[0].labels.instance %>
+      hosts: {{ ctx().get('json_data').get('alerts').get('labels').get(instance) }}
       cmd: "systemctl restart  <% ctx(json_data).alerts[0].labels.process_name %>"
       username: <% ctx(username) %>
