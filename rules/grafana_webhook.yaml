@@ -16,4 +16,6 @@ criteria: {}
 action:
   ref: nufuk.restart_systemctl
   description: nufuk restart_systemctl
+  parameters:
+    grafana_data: "{{ trigger.body }}"
 enabled: true
