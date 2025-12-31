@@ -9,11 +9,18 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: {{ ctx().grafana_data.get("alerts").get("labels").get("instance") }}
+      message: {{ ctx().grafana_data }}
     next:
-      - do: restart_service
+      - do: next_print
         publish:
-          - json_data: {{ ctx().grafana_data.get("alerts") }}
+          - json_data: {{ ctx().grafana_data | tojson }}
+
+  next_print:
+  action: core.echo
+  input:
+    message: {{ ctx().grafana_data.get('alerts').get('labels').get(instance) }}
+  next:
+      - do: restart_service
 
   restart_service:
     action: core.remote_sudo
