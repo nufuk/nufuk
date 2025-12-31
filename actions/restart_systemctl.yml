@@ -5,6 +5,7 @@ runner_type: orquesta
 entry_point: workflows/restart_systemctl.yml
 enabled: true
 parameters:
+  grafana_data: "{{ trigger.body }}"
   hosts:
     required: true
     type: string
