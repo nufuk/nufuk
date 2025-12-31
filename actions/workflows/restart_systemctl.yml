@@ -9,17 +9,25 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: <% ctx().grafana_data.replace('\'', '"') %>
+      message: <% ctx(grafana_data) %>
+    next:
+      #- do: restart_service
+      - do: next_print
+        publish:
+          - json_data: <% ctx().grafana_data.replace('\'', '"') %>
+
+  next_print:
+    action: core.echo
+    input:
+      message: <% ctx(json_data) %>
     next:
       - do: restart_service
         publish:
-          - json_data: <% ctx().grafana_data.replace('\'', '"') %>
+          - json_stuff: "{{ ctx().json_data | from_json_string }}"
 
   restart_service:
     action: core.remote_sudo
     input:
-      #cmd: "systemctl restart  <% ctx().grafana_data.alerts.get(0).labels.process_name.replace('_', '') %>"
-      #hosts: <% ctx().grafana_data.to_json_common().alerts[0].labels.instance.split(':')[0] %>
-      hosts: <% ctx(json_data).alerts[0].labels.instance %>
-      cmd: "systemctl restart  <% ctx(json_data).alerts[0].labels.process_name %>"
+      hosts: <% ctx().json_stuff.alerts[0].labels.instance.split(':')[0] %>
+      cmd: "systemctl restart  <% ctx(json_stuff).alerts[0].labels.process_name.replace('_', '')  %>"
       username: <% ctx(username) %>
