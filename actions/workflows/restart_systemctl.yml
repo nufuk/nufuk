@@ -21,6 +21,8 @@ tasks:
       message: <% ctx(json_data) %>
     next:
       - do: restart_service
+        publish:
+          - json_stuff: {{ ctx().json_data | to_complex }}
 
   restart_service:
     action: core.remote_sudo
