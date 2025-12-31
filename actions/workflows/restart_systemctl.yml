@@ -9,7 +9,7 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: <% ctx() %>
+      message: <% ctx(grafana_data) %>
     next:
       - do: restart_service
         #publish:
