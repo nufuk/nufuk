@@ -9,11 +9,11 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: <% ctx().grafana_data %>
+      message: <% ctx() %>
     next:
       - do: restart_service
         publish:
-          - json_data: {{ ctx().grafana_data | tojson }}
+          - json_data: {{ ctx() }}
 
   restart_service:
     action: core.remote_sudo
