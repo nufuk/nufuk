@@ -9,11 +9,11 @@ tasks:
   print_out_payload:
     action: core.echo
     input:
-      message: <% ctx().grafana_data.replace('\'', '"') %>
+      message: {{ ctx().grafana_data.get(0) }}
     next:
       - do: restart_service
         publish:
-          - json_data: <% ctx().grafana_data %>
+          - json_data: {{ ctx().grafana_data.get(0) }}
 
   restart_service:
     action: core.remote_sudo
