@@ -1,0 +1,19 @@
+---
+name: Restart systemctl
+description: A workflow to restart services with systemctl
+runner_type: orquesta
+entry_point: workflows/restart_systemctl.yaml
+enabled: true
+parameters:
+  hosts:
+    required: true
+    type: string
+    default: TBD
+  username: 
+    required: true
+    type: string
+    default: nufuk
+  service:
+    required: true
+    type: string
+    default: TBD

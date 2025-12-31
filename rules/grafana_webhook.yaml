@@ -1,0 +1,19 @@
+---
+uid: rule:grafana_webhook
+name: grafana_webhook
+ref: nufuk.restart_systemctl
+description: run on a grafana alert
+pack: nufuk
+type:
+  ref: standard
+  parameters: {}
+trigger:
+  type: core.st2.webhook
+  parameters:
+    url: "grafana"
+  description: Triggers whenever grafana sends an alert to this webhook.
+criteria: {}
+action:
+  ref: nufuk.restart_systemctl
+  description: nufuk restart_systemctl
+enabled: true

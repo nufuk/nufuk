@@ -1,0 +1,13 @@
+version: 1.0
+description: restart services
+input: 
+  - hosts
+  - username
+  - service
+tasks:
+  restart_service:
+    action: core.remote_sudo
+    input:
+      cmd: systemctl restart <% ctx().st2.payload.body.alerts[0].labels.process_name %>
+      hosts: <% ctx(hosts) %>
+      username: <% ctx(username) %>
