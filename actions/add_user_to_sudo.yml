@@ -12,9 +12,6 @@ parameters:
     required: true
     type: string
     default: nufuk
-  login_password:
-    secret: true
-    type: string
   sudo_password:
     required: true
     secret: true

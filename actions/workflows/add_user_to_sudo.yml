@@ -1,8 +1,7 @@
 version: 1.0
 description: add user to sudo group
 input: 
-  - username 
-  - login_password
+  - username
   - sudo_password
   - user_to_add
   - server_ip
