@@ -16,10 +16,10 @@ tasks:
       cwd: "/tmp/"
       username: "nufuk"
     next:
-      - when: <% succeeded() %>
-        do: install_dependencies
-      - when: <? failed() ?>
-        do: cleanup
+      - do: install_dependencies
+        when: <% succeeded() %>
+      - do: cleanup
+        when: <? failed() ?>
 
   install_dependencies:
     action: core.remote
@@ -29,10 +29,10 @@ tasks:
       cwd: "/tmp/fritz_port_manager"
       username: "nufuk"
     next:
-      - when: <% succeeded() %>
-        do: open_port
-      - when: <? failed() ?>
-        do: cleanup
+      - do: open_port
+        when: <% succeeded() %>
+      - do: cleanup
+        when: <? failed() ?>
 
   open_port:
     action: core.remote
@@ -42,7 +42,6 @@ tasks:
       cwd: "/tmp/fritz_port_manager"
       username: "nufuk"
     next:
-      - when: <% succeeded() %>
         do: cleanup
 
   cleanup:
