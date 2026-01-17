@@ -1,0 +1,34 @@
+version: 1.0
+description: add user to sudo group
+input: 
+  - username 
+  - login_password
+  - sudo_password
+  - user_to_add
+  - server_ip
+
+tasks:
+  add_user:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "echo <% ctx(sudo_password) %> | sudo usermod -a -G sudo <% ctx(user_to_add) %>"
+      username: "nufuk"
+      password: login_password
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - send_success
+      - when: <% failed() %>
+        do: 
+          - send_failed
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "opening port failed. Please check: <% ctx(in_port) %> <% ctx(server_ip) %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "opening port succeeded: <% ctx(in_port) %> <% ctx(server_ip) %>"

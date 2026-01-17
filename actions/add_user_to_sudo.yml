@@ -1,0 +1,26 @@
+---
+name: add_user_to_sudo
+description: Add a user to the sudo group
+runner_type: orquesta
+entry_point: workflows/add_user_to_sudo.yml
+enabled: true
+parameters:
+  server_ip:
+    required: true
+    type: string
+  username:
+    required: true
+    type: string
+    default: nufuk
+  login_password:
+    secret: true
+    type: string
+  sudo_password:
+    required: true
+    secret: true
+    type: string
+  user_to_add:
+    required: true
+    type: string
+    default: nufuk
+
