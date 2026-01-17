@@ -1,0 +1,20 @@
+---
+name: open_port
+description: Send a message to a telegram group
+runner_type: orquesta
+entry_point: workflows/telegram_message.yml
+enabled: true
+parameters:
+  message: 
+    required: true
+    type: string
+  chat_id: 
+    required: true
+    type: string
+    secret: true
+    default: "{{ st2kv.system.telegram_chat_id| decrypt_kv }}"
+  bot_token: 
+    required: true
+    type: string
+    secret: true
+    default: "{{ st2kv.system.telegram_bot_token| decrypt_kv }}"
