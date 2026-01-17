@@ -16,14 +16,12 @@ tasks:
       username: "nufuk"
       password: login_password
     next:
-      - when: <% 'rockylinux' in result().values().first().stdout %>
-        do: 
-          - add_user
+      - do: add_user
+        when: <% 'rockylinux' in result().values().first().stdout %> 
         publish:
           - group_name: "wheel"
-      - when: <% 'raspberrypi' in result().values().first().stdout %>
-        do: 
-          - add_user
+      - do: add_user
+        when: <% 'raspberrypi' in result().values().first().stdout %> 
         publish:
           - group_name: "sudo"
 
