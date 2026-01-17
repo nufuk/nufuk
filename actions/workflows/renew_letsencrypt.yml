@@ -1,0 +1,57 @@
+version: 1.0
+description: renew letsencrypt
+input: 
+  - server_ip
+
+tasks:
+  open_port:
+    action: nufuk.open_port
+    input:
+      in_port: 80
+      out_port: 80
+      server_ip: <% ctx(server_ip) %>
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - renew_letsencrypt
+      - when: <% failed() %>
+        do: 
+          - send_failed
+
+  renew_letsencrypt:
+    action: core.remote_sudo
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "certbot renew"
+      username: "nufuk"
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - close_port
+      - when: <% failed() %>
+        do: 
+          - send_failed
+
+  close_port:
+    action: nufuk.close_port
+    input:
+      in_port: 80
+      out_port: 80
+      server_ip: <% ctx(server_ip) %>
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - send_success
+      - when: <% failed() %>
+        do: 
+          - send_failed
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "Renewing letsencrypt certificate failed. Please check: <% ctx(server_ip) %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "Renewing letsencrypt certificate succeeded: <% ctx(server_ip) %>"
