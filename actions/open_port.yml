@@ -2,7 +2,7 @@
 name: open_port
 description: A workflow using my python script to open a port
 runner_type: orquesta
-entry_point: workflows/open_port.yaml
+entry_point: workflows/open_port.yml
 enabled: true
 parameters:
   username: 

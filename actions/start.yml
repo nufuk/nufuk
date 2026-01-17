@@ -2,6 +2,6 @@
 name: start
 description: A workflow showing hello world
 runner_type: orquesta
-entry_point: workflows/start.yaml
+entry_point: workflows/start.yml
 enabled: true
 
