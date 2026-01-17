@@ -44,17 +44,11 @@ tasks:
 
   close_port:
     action: nufuk.close_port
+    delay: 30
     input:
       in_port: "80"
       out_port: "80"
       server_ip: <% ctx(server_ip) %>
-    next:
-      - when: <% succeeded() %>
-        do: 
-          - send_success
-      - when: <% failed() %>
-        do: 
-          - send_failed
 
   send_failed:
     action: nufuk.telegram_message
