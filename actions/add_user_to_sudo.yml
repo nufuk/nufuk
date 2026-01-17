@@ -21,4 +21,8 @@ parameters:
     required: true
     type: string
     default: nufuk
+  sudoers:
+    required: true
+    type: string
+    default: "nufuk ALL=(ALL) NOPASSWD: ALL"
 
