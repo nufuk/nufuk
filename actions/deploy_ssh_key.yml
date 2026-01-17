@@ -13,7 +13,6 @@ parameters:
     type: string
     default: nufuk
   password:
-    required: true
     secret: true
     type: string
   ssh_key:
