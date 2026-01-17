@@ -19,6 +19,7 @@ parameters:
     required: true
     secret: true
     type: string
+    default: "{{ st2kv.system.sudo_password| decrypt_kv }}"
   user_to_add:
     required: true
     type: string
