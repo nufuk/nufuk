@@ -21,7 +21,7 @@ tasks:
         when: <% succeeded() %>
       - do: 
           - cleanup
-        when: <? failed() ?>
+        when: <% failed() %>
 
   install_dependencies:
     action: core.remote
@@ -36,13 +36,13 @@ tasks:
         when: <% succeeded() %>
       - do: 
           - cleanup
-        when: <? failed() ?>
+        when: <% failed() %>
 
   open_port:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "./main.py -m open -u <? ctx(username) ?> -p <? ctx(password) ?> -i <? ctx(in_port) ?> -o <? ctx(out_port) ?> -s <? ctx(server_ip) ?> -d <? ctx(description) ?>"
+      cmd: "./main.py -m open -u <% ctx(username) %> -p <% ctx(password) %> -i <% ctx(in_port) %> -o <% ctx(out_port) %> -s <% ctx(server_ip) %> -d <% ctx(description) %>"
       cwd: "/tmp/fritz_port_manager"
       username: "nufuk"
     next:
