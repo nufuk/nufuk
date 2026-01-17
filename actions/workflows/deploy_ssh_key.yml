@@ -45,6 +45,7 @@ tasks:
       cmd: 'cat authorized_keys | grep -w "<% ctx(ssh_key) %>" && echo "exists" || echo "failed"'
       username: <% ctx(username) %>
       password: <% ctx(password) %>
+      cwd: "/home/nufuk/.ssh"
     next:
       - when: <% 'failed' in result().values().first().stdout %>
         do:
@@ -60,6 +61,7 @@ tasks:
       cmd: 'echo -e "<% ctx(ssh_key) %>" >> authorized_keys; chmod 600 authorized_keys'
       username: <% ctx(username) %>
       password: <% ctx(password) %>
+      cwd: "/home/nufuk/.ssh"
     next:
       - when: <% succeeded() %>
         do:
