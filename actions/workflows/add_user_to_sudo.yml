@@ -12,8 +12,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "cat /proc/version"
-      username: "nufuk"
-      password: login_password
+      username: <% ctx(username) %>
     next:
       - do: add_user
         when: <% 'rockylinux' in result().values().first().stdout %> 
@@ -29,8 +28,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "echo <% ctx(sudo_password) %> | sudo -S usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>"
-      username: "nufuk"
-      password: login_password
+      username: <% ctx(username) %>
     next:
       - when: <% succeeded() %>
         do: 
