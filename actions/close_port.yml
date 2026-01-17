@@ -1,5 +1,5 @@
 ---
-name: open_port
+name: close_port
 description: A workflow using my python script to close a port
 runner_type: orquesta
 entry_point: workflows/close_port.yml
