@@ -15,11 +15,11 @@ tasks:
       cmd: "git clone https://github.com/nufuk/fritz_port_manager.git"
       cwd: "/tmp/"
       username: "nufuk"
-      next:
-        - when: <% succeeded() %>
-          do: install_dependencies
-        - when: <? failed() ?>
-          do: cleanup
+    next:
+      - when: <% succeeded() %>
+        do: install_dependencies
+      - when: <? failed() ?>
+        do: cleanup
 
   install_dependencies:
     action: core.remote
@@ -28,11 +28,11 @@ tasks:
       cmd: "./install.sh"
       cwd: "/tmp/fritz_port_manager"
       username: "nufuk"
-      next:
-        - when: <% succeeded() %>
-          do: open_port
-        - when: <? failed() ?>
-          do: cleanup
+    next:
+      - when: <% succeeded() %>
+        do: open_port
+      - when: <? failed() ?>
+        do: cleanup
 
   open_port:
     action: core.remote
@@ -41,9 +41,9 @@ tasks:
       cmd: "./main.py -m open -u <? ctx(username) ?> -p <? ctx(password) ?> -i <? ctx(in_port) ?> -o <? ctx(out_port) ?> -s <? ctx(server_ip) ?> -d <? ctx(description) ?>"
       cwd: "/tmp/fritz_port_manager"
       username: "nufuk"
-      next:
-        - when: <% succeeded() %>
-          do: cleanup
+    next:
+      - when: <% succeeded() %>
+        do: cleanup
 
   cleanup:
     action: core.remote
