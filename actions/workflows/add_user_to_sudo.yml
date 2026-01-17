@@ -35,23 +35,22 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: 
-          - purge_execution
+          - send_success
       - when: <% failed() %>
         do:
-          - purge_execution
           - send_failed
 
-    purge_execution:
-      action: core.remote
-      input:
-        hosts:
-        cmd: 'docker compose exec st2client /opt/stackstorm/st2/bin/st2-purge-executions --config-file /etc/st2/st2.docker.conf --timestamp="2026-11-25T21:45:00.000000Z" --action-ref="nufuk.add_user_to_sudo"'
-        cwd: /opt/stackstorm/st2-docker
-        username: <% ctx(username) %>
-      next:
-      - when: <% succeeded() %>
-        do:
-          - send_success
+    #purge_execution:
+    #  action: core.remote
+    #  input:
+    #    hosts:
+    #    cmd: 'docker compose exec st2client /opt/stackstorm/st2/bin/st2-purge-executions --config-file /etc/st2/st2.docker.conf --timestamp="2026-11-25T21:45:00.000000Z" --action-ref="nufuk.add_user_to_sudo"'
+    #    cwd: /opt/stackstorm/st2-docker
+    #    username: <% ctx(username) %>
+    #  next:
+    #  - when: <% succeeded() %>
+    #    do:
+    #      - send_success
 
   send_failed:
     action: nufuk.telegram_message
