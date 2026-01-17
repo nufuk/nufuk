@@ -22,6 +22,7 @@ tasks:
       - when: <% failed() %>
         do: 
           - cleanup
+          - send_failed
 
   install_dependencies:
     action: core.remote
@@ -37,6 +38,7 @@ tasks:
       - when: <% failed() %>
         do: 
           - cleanup
+          - send_failed
 
   close_port:
     action: core.remote
@@ -46,8 +48,14 @@ tasks:
       cwd: "/tmp/fritz_port_manager"
       username: "nufuk"
     next:
-        - do: 
+        - when: <% succeeded() %>
+          do:
             - cleanup
+            - send_success
+        - when: <% failed() %>
+          do: 
+            - cleanup
+            - send_failed
 
   cleanup:
     action: core.remote
@@ -56,3 +64,13 @@ tasks:
       cmd: "rm -rf ./fritz_port_manager"
       cwd: "/tmp/"
       username: "nufuk"
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "closing port failed. Please check: <% ctx(in_port) %> <% ctx(server_ip) %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "closing port succeeded: <% ctx(in_port) %> <% ctx(server_ip) %>"

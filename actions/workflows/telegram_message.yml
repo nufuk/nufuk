@@ -1,0 +1,56 @@
+version: 1.0
+description: send message to telegram
+input: 
+  - message 
+  - chat_id
+  - bot_token
+  - server_ip
+tasks:
+  checkout_project:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "git clone https://github.com/nufuk/telegram-integration.git"
+      cwd: "/tmp/"
+      username: "nufuk"
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - install_dependencies
+      - when: <% failed() %>
+        do: 
+          - cleanup
+
+  install_dependencies:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "./install.sh"
+      cwd: "/tmp/telegram-integration"
+      username: "nufuk"
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - send_message
+      - when: <% failed() %>
+        do: 
+          - cleanup
+
+  send_message:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "./main.py -m '<% ctx(message) %>' -c <% ctx(chat_id) %> -t '<% ctx(bot_token) %>'"
+      cwd: "/tmp/telegram-integration"
+      username: "nufuk"
+    next:
+        - do: 
+            - cleanup
+
+  cleanup:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "rm -rf ./telegram-integration"
+      cwd: "/tmp/"
+      username: "nufuk"
