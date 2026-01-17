@@ -1,5 +1,5 @@
 version: 1.0
-description: open port
+description: send message to telegram
 input: 
   - message 
   - chat_id

@@ -1,5 +1,5 @@
 ---
-name: open_port
+name: telegram_message
 description: Send a message to a telegram group
 runner_type: orquesta
 entry_point: workflows/telegram_message.yml
