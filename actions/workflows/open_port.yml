@@ -22,7 +22,7 @@ tasks:
           do: cleanup
 
   install_dependencies:
-    action: core.echo
+    action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "./install.sh"
