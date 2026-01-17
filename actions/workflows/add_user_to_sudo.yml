@@ -31,7 +31,8 @@ tasks:
       hosts: <% ctx(server_ip) %>
       #cmd: "echo <% ctx(sudo_password) %> | sudo -S usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>; echo <% ctx(sudo_password) %> | echo '<% ctx(sudoers) %>' > /etc/sudoers.d/nufuk"
       username: <% ctx(username) %>
-      sudo_password:cmd: "sudo usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>; echo '<% ctx(sudoers) %>' > /etc/sudoers.d/<% ctx(user_to_add) %>"
+      sudo_password: <% ctx(sudo_password) %>
+      cmd: "usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>; echo '<% ctx(sudoers) %>' > /etc/sudoers.d/<% ctx(user_to_add) %>"
     next:
       - when: <% succeeded() %>
         do: 
