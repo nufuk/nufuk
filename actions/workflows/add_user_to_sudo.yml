@@ -29,7 +29,6 @@ tasks:
     action: core.remote_sudo
     input:
       hosts: <% ctx(server_ip) %>
-      #cmd: "echo <% ctx(sudo_password) %> | sudo -S usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>; echo <% ctx(sudo_password) %> | echo '<% ctx(sudoers) %>' > /etc/sudoers.d/nufuk"
       username: <% ctx(username) %>
       sudo_password: <% ctx(sudo_password) %>
       cmd: "usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>; echo '<% ctx(sudoers) %>' > /etc/sudoers.d/<% ctx(user_to_add) %>"
@@ -40,18 +39,6 @@ tasks:
       - when: <% failed() %>
         do:
           - send_failed
-
-    #purge_execution:
-    #  action: core.remote
-    #  input:
-    #    hosts:
-    #    cmd: 'docker compose exec st2client /opt/stackstorm/st2/bin/st2-purge-executions --config-file /etc/st2/st2.docker.conf --timestamp="2026-11-25T21:45:00.000000Z" --action-ref="nufuk.add_user_to_sudo"'
-    #    cwd: /opt/stackstorm/st2-docker
-    #    username: <% ctx(username) %>
-    #  next:
-    #  - when: <% succeeded() %>
-    #    do:
-    #      - send_success
 
   send_failed:
     action: nufuk.telegram_message
