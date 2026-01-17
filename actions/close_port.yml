@@ -1,0 +1,29 @@
+---
+name: open_port
+description: A workflow using my python script to close a port
+runner_type: orquesta
+entry_point: workflows/close_port.yml
+enabled: true
+parameters:
+  username: 
+    required: true
+    type: string
+    default: automat
+  password: 
+    required: true
+    type: string
+    secret: true
+    default: "{{ st2kv.system.fritz_password| decrypt_kv }}"
+  port:
+    required: true
+    type: string
+  out_port:
+    required: true
+    type: string
+  server_ip:
+    required: true
+    type: string
+  description:
+    required: true
+    type: string
+    default: "Opened a port via stackstorm"
