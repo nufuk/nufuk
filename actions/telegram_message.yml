@@ -21,5 +21,4 @@ parameters:
   server_ip:
     required: true
     type: string
-    default: "192.168.178.61"
-
+    default: "{{ st2kv.system.host }}"
