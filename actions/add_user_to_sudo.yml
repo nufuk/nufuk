@@ -1,0 +1,28 @@
+---
+name: add_user_to_sudo
+description: Add a user to the sudo group
+runner_type: orquesta
+entry_point: workflows/add_user_to_sudo.yml
+enabled: true
+parameters:
+  server_ip:
+    required: true
+    type: string
+  username:
+    required: true
+    type: string
+    default: nufuk
+  sudo_password:
+    required: true
+    secret: true
+    type: string
+    default: "{{ st2kv.system.sudo_password| decrypt_kv }}"
+  user_to_add:
+    required: true
+    type: string
+    default: nufuk
+  sudoers:
+    required: true
+    type: string
+    default: "nufuk ALL=(ALL) NOPASSWD: ALL"
+

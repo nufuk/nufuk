@@ -1,0 +1,51 @@
+version: 1.0
+description: add user to sudo group
+input: 
+  - username
+  - sudo_password
+  - user_to_add
+  - server_ip
+  - sudoers
+tasks:
+  check_os:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "cat /proc/version"
+      username: <% ctx(username) %>
+    next:
+      - do: 
+          - add_user
+        when: <% 'rockylinux' in result().values().first().stdout %> 
+        publish:
+          - group_name: "wheel"
+      - do: 
+          - add_user
+        when: <% 'raspberrypi' in result().values().first().stdout %> 
+        publish:
+          - group_name: "sudo"
+
+  add_user:
+    action: core.remote_sudo
+    input:
+      hosts: <% ctx(server_ip) %>
+      username: <% ctx(username) %>
+      sudo_password: <% ctx(sudo_password) %>
+      cmd: "usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>; echo '<% ctx(sudoers) %>' > /etc/sudoers.d/<% ctx(user_to_add) %>"
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - send_success
+      - when: <% failed() %>
+        do:
+          - send_failed
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "adding user to sudo group failed. <% ctx(user_to_add) %> <% ctx(server_ip) %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "Adding user to sudo group succeeded: <% ctx(user_to_add) %> <% ctx(server_ip) %>"
