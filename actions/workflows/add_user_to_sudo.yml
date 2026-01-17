@@ -8,11 +8,30 @@ input:
   - server_ip
 
 tasks:
+  check_os:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "cat /proc/version"
+      username: "nufuk"
+      password: login_password
+    next:
+      - when: <% 'rockylinux' in result().values().first().stdout %>
+        do: 
+          - add_user
+        publish:
+          - group_name: "wheel"
+      - when: <% 'raspberrypi' in result().values().first().stdout %>
+        do: 
+          - add_user
+        publish:
+          - group_name: "sudo"
+
   add_user:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "echo <% ctx(sudo_password) %> | sudo -S usermod -a -G sudo <% ctx(user_to_add) %>"
+      cmd: "echo <% ctx(sudo_password) %> | sudo -S usermod -a -G <% ctx(group_name) %> <% ctx(user_to_add) %>"
       username: "nufuk"
       password: login_password
     next:
