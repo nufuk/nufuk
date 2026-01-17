@@ -1,0 +1,22 @@
+---
+name: deploy_ssh_key
+description: A workflow to deploy ssh key can also input from keyvault e.g. {{ st2kv.system.thinkcentre_ssh| decrypt_kv }}
+runner_type: orquesta
+entry_point: workflows/deploy_ssh_key.yml
+enabled: true
+parameters:
+  hosts:
+    required: true
+    type: string
+  username: 
+    required: true
+    type: string
+    default: nufuk
+  password:
+    secret: true
+    type: string
+  ssh_key:
+    required: true
+    type: string
+    secret: true
+    default: "{{ st2kv.system.laptop_ssh_key| decrypt_kv }}"
