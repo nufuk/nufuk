@@ -1,0 +1,10 @@
+---
+name: renew_letsencrypt
+description: Send renew letsencrypt certificate
+runner_type: orquesta
+entry_point: workflows/renew_letsencrypt.yml
+enabled: true
+parameters:
+  server_ip:
+    required: true
+    type: string
