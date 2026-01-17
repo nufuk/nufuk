@@ -12,7 +12,7 @@ tasks:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "echo <% ctx(sudo_password) %> | sudo usermod -a -G sudo <% ctx(user_to_add) %>"
+      cmd: "echo <% ctx(sudo_password) %> | sudo -S usermod -a -G sudo <% ctx(user_to_add) %>"
       username: "nufuk"
       password: login_password
     next:
