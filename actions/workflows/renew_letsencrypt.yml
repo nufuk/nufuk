@@ -25,12 +25,22 @@ tasks:
       cmd: "certbot renew"
       username: "nufuk"
     next:
-      - when: <% succeeded() %>
+      - when: <% 'command not found' in result().values().first().stdout %>
         do: 
           - close_port
-      - when: <% failed() %>
+          - send_no_certificate
+      - when: <% 'Certificate not yet due for renewal' in result().values().first().stdout %>
         do: 
+          - close_port
+          - send_not_due
+      - when: <% 'renew failure' in result().values().first().stdout %>
+        do: 
+          - close_port
           - send_failed
+      - when: <% 'Congratulations, all renewals succeeded' in result().values().first().stdout %>
+        do: 
+          - close_port
+          - send_success
 
   close_port:
     action: nufuk.close_port
@@ -55,3 +65,13 @@ tasks:
     action: nufuk.telegram_message
     input:
       message: "Renewing letsencrypt certificate succeeded: <% ctx(server_ip) %>"
+
+  send_no_certificate:
+    action: nufuk.telegram_message
+    input:
+      message: "Server has no SSL certificates: <% ctx(server_ip) %>"
+
+  send_not_due:
+    action: nufuk.telegram_message
+    input:
+      message: "Certificate not yet due for renewal: <% ctx(server_ip) %>"
