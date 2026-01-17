@@ -14,11 +14,13 @@ tasks:
       cmd: "cat /proc/version"
       username: <% ctx(username) %>
     next:
-      - do: add_user
+      - do: 
+          - add_user
         when: <% 'rockylinux' in result().values().first().stdout %> 
         publish:
           - group_name: "wheel"
-      - do: add_user
+      - do: 
+          - add_user
         when: <% 'raspberrypi' in result().values().first().stdout %> 
         publish:
           - group_name: "sudo"
