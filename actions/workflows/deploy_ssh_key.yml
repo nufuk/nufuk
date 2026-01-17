@@ -1,0 +1,87 @@
+version: 1.0
+description: Deploy SSH Key
+input: 
+  - hosts
+  - username
+  - password
+  - ssh_key
+tasks:
+
+  check_if_dir_exists:
+    action: core.remote
+    input:
+      hosts: <% ctx(hosts) %>
+      cmd: '[ -d "/home/nufuk/.ssh" ] && echo "exists" || echo "failed"'
+      username: <% ctx(username) %>
+      password: <% ctx(password) %>
+    next:
+      - when: <% 'failed' in result().values().first().stdout %>
+        do:
+          - create_folder
+      - when: <% 'exists' in result().values().first().stdout %>
+        do:
+          - check_if_exists
+
+  create_folder:
+    action: core.remote
+    input:
+      hosts: <% ctx(hosts) %>
+      cmd: 'mkdir .ssh'
+      cwd: "/home/nufuk/"
+      username: <% ctx(username) %>
+      password: <% ctx(password) %>
+    next:
+      - when: <% succeeded() %>
+        do:
+          - deploy_key
+      - when: <% failed() %>
+        do:
+          - send_failed
+
+  check_if_exists:
+    action: core.remote
+    input:
+      hosts: <% ctx(hosts) %>
+      cmd: 'cat authorized_keys | grep -w "<% ctx(ssh_key) %>" && echo "exists" || echo "failed"'
+      username: <% ctx(username) %>
+      password: <% ctx(password) %>
+      cwd: "/home/nufuk/.ssh"
+    next:
+      - when: <% 'failed' in result().values().first().stdout %>
+        do:
+          - deploy_key
+      - when: <% 'exists' in result().values().first().stdout %>
+        do:
+          - send_not_necessary
+
+  deploy_key:
+    action: core.remote
+    input:
+      hosts: <% ctx(hosts) %>
+      cmd: 'echo -e "<% ctx(ssh_key) %>" >> authorized_keys; chmod 600 authorized_keys'
+      username: <% ctx(username) %>
+      password: <% ctx(password) %>
+      cwd: "/home/nufuk/.ssh"
+    next:
+      - when: <% succeeded() %>
+        do:
+          - send_success
+      - when: <% failed() %>
+        do:
+          - send_failed
+
+  send_not_necessary:
+    action: nufuk.telegram_message
+    input:
+      message: "deploying ssh key not necessary, already exists in file on server: <% ctx(hosts) %>"
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "deploying ssh key failed on Server: <% ctx(hosts) %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "deploying ssh key succeeded on Server: <% ctx(hosts) %>"
+    

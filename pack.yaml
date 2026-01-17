@@ -23,7 +23,6 @@ python_versions:
 # exact version, tag, or branch.
 dependencies:
   - core
-  - telegram
 # Name of the pack author.
 author: nufuk
 # Email of the pack author.
