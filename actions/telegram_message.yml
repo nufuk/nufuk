@@ -18,3 +18,8 @@ parameters:
     type: string
     secret: true
     default: "{{ st2kv.system.telegram_bot_token| decrypt_kv }}"
+  server_ip:
+    required: true
+    type: string
+    default: "192.168.178.61"
+

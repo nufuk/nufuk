@@ -4,6 +4,7 @@ input:
   - message 
   - chat_id
   - bot_token
+  - server_ip
 tasks:
   checkout_project:
     action: core.remote
