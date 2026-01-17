@@ -26,9 +26,9 @@ tasks:
   send_failed:
     action: nufuk.telegram_message
     input:
-      message: "opening port failed. Please check: <% ctx(in_port) %> <% ctx(server_ip) %>"
+      message: "adding user to sudo group failed. <% ctx(user_to_add) %> <% ctx(server_ip) %>"
   
   send_success:
     action: nufuk.telegram_message
     input:
-      message: "opening port succeeded: <% ctx(in_port) %> <% ctx(server_ip) %>"
+      message: "Adding user to sudo group succeeded: <% ctx(user_to_add) %> <% ctx(server_ip) %>"
