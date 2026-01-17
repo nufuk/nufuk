@@ -33,12 +33,12 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: 
-          - open_port
+          - close_port
       - when: <% failed() %>
         do: 
           - cleanup
 
-  open_port:
+  close_port:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>

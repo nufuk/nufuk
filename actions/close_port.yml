@@ -14,7 +14,7 @@ parameters:
     type: string
     secret: true
     default: "{{ st2kv.system.fritz_password| decrypt_kv }}"
-  port:
+  in_port:
     required: true
     type: string
   out_port:
