@@ -1,7 +1,7 @@
 import winrm
 from st2common.runners.base_action import Action
 
-class Execute_WinRM_Command(Action):
+class WinrmExec(Action):
     def run(self, url, username, password, command, transport="ntlm", ssl=False, terminal_type="cmd", endpoint="wsman", port="5985"):
         validate = 'validate'
         if not ssl:
