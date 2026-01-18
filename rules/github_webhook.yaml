@@ -15,10 +15,10 @@ trigger:
 criteria:
   trigger.body.ref:
     type: eq
-    pattern: "refs/head/main"
+    pattern: "refs/heads/main"
 action:
   ref: nufuk.github_webhook
   description: trigger installation of main branch
   parameters:
-    github_data: "{{ trigger.body.payload }}"
+    github_data: "{{ trigger.body }}"
 enabled: true
