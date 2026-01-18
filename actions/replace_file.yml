@@ -1,0 +1,16 @@
+---
+name: replace_file
+description: replace one file with another
+runner_type: orquesta
+entry_point: workflows/replace_file.yml
+enabled: true
+parameters:
+  server_ip:
+    required: true
+    type: string
+  old_file_path:
+    required: true
+    type: string
+  new_file_path:
+    required: true
+    type: string
