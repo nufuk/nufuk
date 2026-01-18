@@ -2,7 +2,7 @@
 uid: rule:github_webhook
 name: github_webhook
 ref: nufuk.github_webhook
-description: run on a merge with the main repo
+description: This rule gets triggered from github when a branch is merged main
 pack: nufuk
 type:
   ref: standard
