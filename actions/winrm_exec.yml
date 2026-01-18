@@ -13,11 +13,13 @@ parameters:
     type: "string"
     description: "Windows User which used to connect"
     required: true
+    default: "Administrator" 
   password:
     type: "string"
     secret: true
     description: "Password for the windows user"
     required: true
+    default: "{{ st2kv.system.windows_password| decrypt_kv }}"
   command:
     type: "string"
     description: "which command to execute"
