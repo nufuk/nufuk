@@ -22,12 +22,12 @@ tasks:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "cp <% ctx(source_file_path) %> <% ctx(destination_file_path) %>  %>"
+      cmd: "scp nufuk@<% ctx(source_file_path) %>:<% ctx(source_file_path) %> <% ctx(destination_file_path) %>  %>"
       username: <% ctx(username) %>
 
   local_copy:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "cp nufuk@<% ctx(source_file_path) %>:<% ctx(source_file_path) %> <% ctx(destination_file_path) %>  %>"
+      cmd: "cp <% ctx(source_file_path) %> <% ctx(destination_file_path) %>  %>"
       username: <% ctx(username) %>
