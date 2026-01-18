@@ -3,26 +3,7 @@ description: install main
 input: 
   - github_data
 tasks:
-  print_out_payload:
-    action: core.echo
-    input:
-      message: <% ctx(github_data) %>
-    next:
-      #- do: restart_service
-      - do: next_print
-        publish:
-          - json_data: <% ctx().github_data.replace('\'', '"') %>
-
-  next_print:
-    action: core.echo
-    input:
-      message: <% ctx(json_data) %>
-    next:
-      - do: restart_service
-        publish:
-          - json_stuff: "{{ ctx().json_data | from_json_string }}"
-
-  restart_service:
+  install_main:
     action: packs.install
     input:
       packs: "https://github.com/nufuk/nufuk.git"
