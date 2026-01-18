@@ -8,9 +8,20 @@ parameters:
   server_ip:
     required: true
     type: string
-  old_file_path:
+  username:
     required: true
     type: string
-  new_file_path:
+  destination_file_path:
     required: true
+    type: string
+    description: "full path to the file you want to replace"
+  source_file_path:
+    required: true
+    type: string
+    description: "full path to the new file you want to deploy"
+  remote_file:
+    required: true
+    type: boolean
+    default: false
+  remote_server_ip:
     type: string
