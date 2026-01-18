@@ -1,7 +1,7 @@
 ---
-uid: rule:install_main_merge
-name: install_main_merge
-ref: packs.install
+uid: rule:github_webhook
+name: github_webhook
+ref: nufuk.github_webhook
 description: run on a merge with the main repo
 pack: nufuk
 type:
@@ -14,8 +14,8 @@ trigger:
   description: Triggers whenever there is merge to main.
 criteria: {}
 action:
-  ref: packs.install
-  description: trigger packs.install
+  ref: nufuk.github_webhook
+  description: trigger packs.install of main
   parameters:
-    packs: "https://github.com/nufuk/nufuk.git"
+    github_data: "{{ trigger.body.payload }}"
 enabled: true

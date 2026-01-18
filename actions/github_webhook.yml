@@ -1,0 +1,11 @@
+---
+name: github_webhook
+description: A workflow to install main
+runner_type: orquesta
+entry_point: workflows/github_webhook.yml
+enabled: true
+parameters:
+  github_data:
+    type: string
+    required: false
+
