@@ -41,7 +41,7 @@ parameters:
     type: boolean
     description: "enable ssl verification or not"
     required: true
-    default: 0
+    default: false
   terminal_type:
     type: string
     description: "choose between windows cmd or powershell"
