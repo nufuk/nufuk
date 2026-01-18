@@ -12,7 +12,10 @@ trigger:
   parameters:
     url: "mainmerge"
   description: Triggers whenever there is merge to main.
-criteria: {}
+criteria: 
+    trigger.body:
+      type: contains
+      pattern: "refs/heads/main"
 action:
   ref: nufuk.github_webhook
   description: trigger packs.install of main
