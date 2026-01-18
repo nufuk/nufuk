@@ -1,0 +1,10 @@
+---
+name: github_webhook
+description: A workflow to restart services with systemctl
+runner_type: orquesta
+entry_point: workflows/github_webhook.yml
+enabled: true
+parameters:
+  grafana_data:
+    required: true
+
