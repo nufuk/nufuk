@@ -17,7 +17,5 @@ class WinrmExec(Action):
 
         if r.status_code == 0:
             print(f'{r.std_out}')
-        elif not r.status_code == 0:
-            print(f'status code: {r.status_code}') 
-            print(f'Error message: {r.std_err}')
+
         return
