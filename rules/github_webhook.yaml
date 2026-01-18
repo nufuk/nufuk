@@ -16,4 +16,6 @@ criteria: {}
 action:
   ref: nufuk.github_webhook
   description: trigger packs.install of main
+  parameters:
+    github_data: "{{ trigger.body.payload }}"
 enabled: true

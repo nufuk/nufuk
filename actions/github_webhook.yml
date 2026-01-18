@@ -6,5 +6,6 @@ entry_point: workflows/github_webhook.yml
 enabled: true
 parameters:
   github_data:
-    required: true
+    type: string
+    required: false
 
