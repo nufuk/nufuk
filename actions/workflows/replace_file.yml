@@ -1,0 +1,33 @@
+version: 1.0
+description: restart services
+input: 
+  - server_ip
+  - username
+  - destination_file_path
+  - source_file_path
+  - remote_file
+  - remote_server_ip
+tasks:
+  check_if_remote_copy:
+    action: core.noop
+    next:
+      - when: <% ctx(remote_file) %>
+        do:
+          - scp_copy
+      - when: <% not ctx(remote_file) %>
+        do:
+          - local_copy
+
+  scp_copy:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "scp nufuk@<% ctx(remote_server_ip) %>:<% ctx(source_file_path) %> <% ctx(destination_file_path) %>"
+      username: <% ctx(username) %>
+
+  local_copy:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "cp <% ctx(source_file_path) %> <% ctx(destination_file_path) %>"
+      username: <% ctx(username) %>
