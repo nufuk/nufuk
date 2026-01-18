@@ -32,7 +32,7 @@ parameters:
     description: "enable ssl verification or not"
     required: true
     default: 0
-  type:
+  console_type:
     type: array
     description: "choose between windows cmd or powershell"
     required: true
