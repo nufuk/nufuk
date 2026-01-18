@@ -1,0 +1,2 @@
+pywinrm[credssp]
+pywinrm[kerberos]
