@@ -1,0 +1,62 @@
+---
+name: winrm_exec
+runner_type: "python-script"
+description: "Execute a winrm command on a remote windows host"
+enabled: true
+entry_point: "scripts/winrm_exec.py"
+parameters:
+  url:
+    type: "string"
+    description: "URL or Hostname to the windows Server"
+    required: true
+  username:
+    type: "string"
+    description: "Windows User which used to connect"
+    required: true
+    default: "Administrator" 
+  password:
+    type: "string"
+    secret: true
+    description: "Password for the windows user"
+    required: true
+    default: "{{ st2kv.system.windows_password| decrypt_kv }}"
+  command:
+    type: "string"
+    description: "which command to execute"
+    required: true
+  transport:
+    type: string
+    description: "which connection method to use"
+    required: true
+    default: "ntlm"
+    enum:
+      - "ntlm"
+      - "basic"
+      - "certificate"
+      - "kerberos"
+      - "credssp"
+      - "plaintext"
+      - "ssl"
+  ssl:
+    type: boolean
+    description: "enable ssl verification or not"
+    required: true
+    default: false
+  terminal_type:
+    type: string
+    description: "choose between windows cmd or powershell"
+    required: true
+    default: "cmd"
+    enum:
+      - "cmd"
+      - "ps"
+  endpoint:
+    type: "string"
+    description: "endpoint name for remote management"
+    required: true
+    default: "wsman"
+  port:
+    type: "string"
+    description: "Port to connect to"
+    required: true
+    default: "5985"
