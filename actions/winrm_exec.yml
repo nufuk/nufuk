@@ -25,20 +25,31 @@ parameters:
     description: "which command to execute"
     required: true
   transport:
-    type: array
+    type: string
     description: "which connection method to use"
     required: true
-    default: ["ntlm", "basic", "certificate", "kerberos", "credssp", "plaintext", "ssl"]
+    default: ntlm"
+    enum:
+      - "ntlm"
+      - "basic"
+      - "certificate"
+      - "kerberos"
+      - "credssp"
+      - "plaintext"
+      - "ssl"
   ssl:
     type: boolean
     description: "enable ssl verification or not"
     required: true
     default: 0
-  console_type:
-    type: array
+  terminal_type:
+    type: string
     description: "choose between windows cmd or powershell"
     required: true
-    default: ["cmd", "ps"]
+    default: "cmd"
+    enum:
+      - cmd
+      - ps
   endpoint:
     type: "string"
     description: "endpoint name for remote management"
