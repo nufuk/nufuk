@@ -1,0 +1,21 @@
+---
+uid: rule:install_main_merge
+name: install_main_merge
+ref: packs.install
+description: run on a merge with the main repo
+pack: nufuk
+type:
+  ref: standard
+  parameters: {}
+trigger:
+  type: core.st2.webhook
+  parameters:
+    url: "mainmerge"
+  description: Triggers whenever there is merge to main.
+criteria: {}
+action:
+  ref: packs.install
+  description: trigger packs.install
+  parameters:
+    packs: "https://github.com/nufuk/nufuk.git"
+enabled: true
