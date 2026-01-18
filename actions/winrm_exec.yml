@@ -26,7 +26,7 @@ parameters:
     type: array
     description: "which connection method to use"
     required: true
-    idefault: ["ntlm", "basic", "certificate", "kerberos", "credssp", "plaintext", "ssl"]
+    default: ["ntlm", "basic", "certificate", "kerberos", "credssp", "plaintext", "ssl"]
   ssl:
     type: boolean
     description: "enable ssl verification or not"
