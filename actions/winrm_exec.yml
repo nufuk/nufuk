@@ -28,7 +28,7 @@ parameters:
     type: string
     description: "which connection method to use"
     required: true
-    default: ntlm"
+    default: "ntlm"
     enum:
       - "ntlm"
       - "basic"
@@ -48,8 +48,8 @@ parameters:
     required: true
     default: "cmd"
     enum:
-      - cmd
-      - ps
+      - "cmd"
+      - "ps"
   endpoint:
     type: "string"
     description: "endpoint name for remote management"
