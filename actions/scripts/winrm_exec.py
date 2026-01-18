@@ -14,8 +14,4 @@ class Execute_WinRM_Command(Action):
             r = s.run_cmd(command)
         elif terminal_type == "ps":
             r = s.run_ps(command)
-
-        print(r.status_code)
-        print(r.std_err)
-        print(r.std_out)
         return
