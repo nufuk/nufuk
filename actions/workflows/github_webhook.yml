@@ -1,8 +1,14 @@
 version: 1.0
-description: install main
-
+description: Install the main branch
+input:
+  - github_data
 tasks:
   install_main:
     action: packs.install
     input:
-      packs: "https://github.com/nufuk/nufuk.git"
+      packs:
+        - "https://github.com/nufuk/nufuk.git"
+    retry:
+      when: <% failed() %>
+      count: 3
+      delay: 30
