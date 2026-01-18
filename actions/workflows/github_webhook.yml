@@ -1,9 +1,7 @@
 version: 1.0
 description: install main
-input: 
-  - github_data
-tasks:
 
+tasks:
   install_main:
     action: packs.install
     input:
