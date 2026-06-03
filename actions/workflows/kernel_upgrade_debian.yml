@@ -54,13 +54,3 @@ tasks:
       hosts: <% ctx(host) %>
       cmd: "uname -r"
       username: <% ctx(username) %>
-
-  send_failed:
-    action: nufuk.telegram_message
-    input:
-      message: "Kernel upgrade failed <% ctx(host) %>"
-  
-  send_success:
-    action: nufuk.telegram_message
-    input:
-      message: "Kernel upgrade failed <% ctx(host) %>"
