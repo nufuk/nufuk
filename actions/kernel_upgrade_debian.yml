@@ -10,7 +10,7 @@ parameters:
     type: string
   username:
     required: true
-    type: string
+    type: "{{ st2kv.system.username}}"
   sudo_password:
     required: true
     secret: true
