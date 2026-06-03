@@ -49,8 +49,8 @@ tasks:
 
   sudo_check_kernel:
     action: core.remote
+    delay: 120
     input:
-      delay: 120
       hosts: <% ctx(host) %>
       cmd: "uname -r"
       username: <% ctx(username) %>
