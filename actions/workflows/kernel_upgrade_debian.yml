@@ -12,7 +12,7 @@ tasks:
       cmd: "uname -r"
       username: <% ctx(username) %>
     next:
-      - do: sudo update
+      - do: sudo_update
 
   sudo_update:
     action: core.remote_sudo
@@ -58,9 +58,9 @@ tasks:
   send_failed:
     action: nufuk.telegram_message
     input:
-      message: "Kernel upgrade failed <% ctx(hosts) %>"
+      message: "Kernel upgrade failed <% ctx(host) %>"
   
   send_success:
     action: nufuk.telegram_message
     input:
-      message: "Kernel upgrade failed <% ctx(hosts) %>"
+      message: "Kernel upgrade failed <% ctx(host) %>"
