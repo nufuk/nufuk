@@ -24,12 +24,12 @@ tasks:
     
   create_random_number:
     action: core.noop
-    publish:
-      random_num: <% random(65536) %>
     next:
       - when: <% succeeded() %>
         do: 
           - move_folder
+        publish:
+          - random_num: <% random(65536) %>
 
   move_folder:
     action: core.remote
