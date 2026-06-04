@@ -1,0 +1,11 @@
+---
+name: multiple_kernel_upgrade_debian
+description: trigger the raspberrypi Debian Kernel upgrade
+runner_type: orquesta
+entry_point: workflows/multiple_kernel_upgrade_debian.yml
+enabled: true
+parameters:
+  hosts:
+    required: true
+    type: array
+    default: "{{ st2kv.system.debian_server }}"

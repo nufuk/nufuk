@@ -24,4 +24,4 @@ criteria: {}
 action:
   ref: nufuk.start
   description: nufuk start
-enabled: true
+enabled: false

@@ -1,0 +1,19 @@
+---
+name: kernel_upgrade_rocky
+description: upgrade the Rocky Kernel
+runner_type: orquesta
+entry_point: workflows/kernel_upgrade_rocky.yml
+enabled: true
+parameters:
+  host:
+    required: true
+    type: string
+  username:
+    required: true
+    type: string
+    default: "{{ st2kv.system.user }}"
+  sudo_password:
+    required: true
+    secret: true
+    type: string
+    default: "{{ st2kv.system.sudo_password| decrypt_kv }}"
