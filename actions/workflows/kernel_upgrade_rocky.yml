@@ -12,7 +12,7 @@ tasks:
       cmd: "uname -r"
       username: <% ctx(username) %>
       env:
-        StrictHostKeyChecking: accept-new
+        StrictHostKeyChecking: "accept-new"
     next:
       - do: sudo_upgrade_kernel
 
@@ -24,7 +24,7 @@ tasks:
       sudo_password: <% ctx(sudo_password) %>
       username: <% ctx(username) %>
       env:
-        StrictHostKeyChecking: accept-new
+        StrictHostKeyChecking: "accept-new"
       timeout: 1800
     next:
       - do: sudo_reboot
@@ -37,7 +37,7 @@ tasks:
       sudo_password: <% ctx(sudo_password) %>
       username: <% ctx(username) %>
       env:
-        StrictHostKeyChecking: accept-new
+        StrictHostKeyChecking: "accept-new"
       timeout: 1800
     next:
       - do: sudo_check_kernel
@@ -45,7 +45,7 @@ tasks:
   sudo_check_kernel:
     action: core.remote
     env:
-        StrictHostKeyChecking: accept-new
+        StrictHostKeyChecking: "accept-new"
     delay: 240
     input:
       hosts: <% ctx(host) %>
