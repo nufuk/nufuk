@@ -16,6 +16,33 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: 
+          - create_random_number
+      - when: <% failed() %>
+        do: 
+          - cleanup
+    
+  create_random_number:
+    action: core.noop
+    publish:
+      random_num: <% random(65536) %>
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - move_folder
+      - when: <% failed() %>
+        do: 
+          - cleanup
+
+  move_folder:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "mv telegram-integration <% ctx(random_num) %>"
+      cwd: "/tmp/"
+      username: "nufuk"
+    next:
+      - when: <% succeeded() %>
+        do: 
           - install_dependencies
       - when: <% failed() %>
         do: 
@@ -26,7 +53,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "./install.sh"
-      cwd: "/tmp/telegram-integration"
+      cwd: "/tmp/<% ctx(random_num) %>"
       username: "nufuk"
     next:
       - when: <% succeeded() %>
@@ -41,7 +68,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "./main.py -m '<% ctx(message) %>' -c <% ctx(chat_id) %> -t '<% ctx(bot_token) %>'"
-      cwd: "/tmp/telegram-integration"
+      cwd: "/tmp/<% ctx(random_num) %>"
       username: "nufuk"
     next:
         - do: 
@@ -51,6 +78,6 @@ tasks:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "rm -rf ./telegram-integration"
+      cmd: "rm -rf ./<% ctx(random_num) %>"
       cwd: "/tmp/"
       username: "nufuk"

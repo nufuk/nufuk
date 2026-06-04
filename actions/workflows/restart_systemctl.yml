@@ -31,3 +31,13 @@ tasks:
       hosts: <% ctx().json_stuff.alerts[0].labels.instance.split(':')[0] %>
       cmd: "systemctl restart  <% ctx(json_stuff).alerts[0].labels.process_name.replace('_', '')  %>"
       username: <% ctx(username) %>
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "Failed to restart service: <% ctx(json_stuff).alerts[0].labels.process_name.replace('_', '')  %> on Server: <% ctx().json_stuff.alerts[0].labels.instance.split(':')[0] %> with error: <% result().stderr %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "Successful restarted service: <% ctx(json_stuff).alerts[0].labels.process_name.replace('_', '')  %> on Server: <% ctx().json_stuff.alerts[0].labels.instance.split(':')[0] %> "
