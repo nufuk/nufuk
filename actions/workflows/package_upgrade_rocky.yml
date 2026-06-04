@@ -28,9 +28,9 @@ tasks:
   send_failed:
     action: nufuk.telegram_message
     input:
-      message: "Package upgrade failed on Rocky Server: <% ctx(host) %> with error: <% result().stderr %>"
+      message: "Package upgrade failed on Rocky Server: <% ctx(hosts) %> with error: <% result().stderr %>"
   
   send_success:
     action: nufuk.telegram_message
     input:
-      message: "Package upgrade successfull on Rocky Server: <% ctx(host) %>"
+      message: "Package upgrade successfull on Rocky Server: <% ctx(hosts) %>"
