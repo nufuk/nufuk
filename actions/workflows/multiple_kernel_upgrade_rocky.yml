@@ -7,4 +7,4 @@ tasks:
     with:
       items: <% ctx(hosts) %>
       concurrency: 5
-    action: nufuk.kernel_upgrade_rocky hosts=<% item() %>
+    action: nufuk.kernel_upgrade_rocky host=<% item() %>
