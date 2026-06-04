@@ -13,7 +13,7 @@ trigger:
     day: '*'
     day_of_week: '0'
     hour: '4'
-    minute: '0'
+    minute: '30'
     month: '*'
     second: '0'
     timezone: 'CET'

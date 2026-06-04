@@ -1,0 +1,27 @@
+---
+uid: rule:nufuk:package_upgrade_debian
+name: package_upgrade_debian
+ref: nufuk.package_upgrade_debian
+description: upgrades the Debian packages once a week
+pack: nufuk
+type:
+  ref: standard
+  parameters: {}
+trigger:
+  type: core.st2.CronTimer
+  parameters:
+    day: '*'
+    day_of_week: '1'
+    hour: '4'
+    minute: '0'
+    month: '*'
+    second: '0'
+    timezone: 'CET'
+    week: '*'
+    year: '*'
+  description: Triggers whenever current time matches the specified time constaints like a UNIX cron scheduler.
+criteria: {}
+action:
+  ref: nufuk.package_upgrade_debian
+  description: nufuk package_upgrade_debian
+enabled: true
