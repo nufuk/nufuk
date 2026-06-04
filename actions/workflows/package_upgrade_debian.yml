@@ -1,0 +1,35 @@
+version: 1.0
+description: Upgrade Kernel Debian (raspberrypi), use this workflow for a single server inside a wrapper for many server
+input: 
+  - hosts
+  - username
+  - sudo_password
+tasks:
+
+  sudo_update:
+    with: <% ctx(hosts) %>
+    action: core.remote_sudo
+    input:
+      hosts: <% item() %>
+      cmd: "apt update -y"
+      sudo_password: <% ctx(sudo_password) %>
+      username: <% ctx(username) %>
+      env:
+        StrictHostKeyChecking: "accept-new"
+      timeout: 1800
+    next:
+      - do: sudo_upgrade
+        publish:
+          - host: <% item() %>
+
+  sudo_upgrade:
+    action: core.remote_sudo
+    input:
+      hosts: <% ctx(host) %>
+      cmd: "apt upgrade -y"
+      sudo_password: <% ctx(sudo_password) %>
+      username: <% ctx(username) %>
+      env:
+        StrictHostKeyChecking: "accept-new"
+      timeout: 1800
+

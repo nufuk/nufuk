@@ -1,0 +1,20 @@
+version: 1.0
+description: Upgrade packages Rocky
+input: 
+  - hosts
+  - username
+  - sudo_password
+tasks:
+
+  sudo_upgrade:
+    with: <% ctx(hosts) %>
+    concurrency: 5
+    action: core.remote_sudo
+    input:
+      hosts: <% item() %>
+      cmd: "dnf upgrade -y"
+      sudo_password: <% ctx(sudo_password) %>
+      username: <% ctx(username) %>
+      env:
+        StrictHostKeyChecking: "accept-new"
+      timeout: 1800
