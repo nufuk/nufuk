@@ -3,15 +3,8 @@ description: Iterate over an array of server to trigger the Kernel upgrade for R
 input: 
   - hosts
 tasks:
-  echo_Server:
+  iterate_server_list:
     with:
       items: <% ctx(hosts) %>
       concurrency: 5
-    action: core.echo message=<% item() %>
-    next:
-      - do: iterate_server_list
-#  iterate_server_list:
-#    with:
-#      items: <% ctx(hosts) %>
-#      concurrency: 5
-#    action: nufuk.kernel_upgrade_rocky host=<% item() %>
+    action: nufuk.kernel_upgrade_rocky host=<% item() %>
