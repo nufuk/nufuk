@@ -18,7 +18,7 @@ criteria:
     pattern: "refs/heads/main"
 action:
   ref: nufuk.github_webhook
-  description: trigger installation of main branch
+  description: trigger installation of main branch, need to create a st2_api key and configure it into the github webhook
   parameters:
     github_data: "{{ trigger.body }}"
 enabled: true

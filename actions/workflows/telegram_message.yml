@@ -5,12 +5,39 @@ input:
   - chat_id
   - bot_token
   - server_ip
+
+vars:
+  - my_string: "lorem ipsum"
+
 tasks:
   checkout_project:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "git clone https://github.com/nufuk/telegram-integration.git"
+      cwd: "/tmp/"
+      username: "nufuk"
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - generate_string
+
+  generate_string:
+    action: core.local
+    input:
+      cmd: python3 -c 'import secrets; print(secrets.token_hex(16))'
+    next:
+      - when: <% succeeded() %>
+        do:
+          - move_folder
+        publish:
+          - my_string: <% result().stdout %>
+
+  move_folder:
+    action: core.remote
+    input:
+      hosts: <% ctx(server_ip) %>
+      cmd: "mv telegram-integration <% ctx(my_string) %>"
       cwd: "/tmp/"
       username: "nufuk"
     next:
@@ -26,7 +53,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "./install.sh"
-      cwd: "/tmp/telegram-integration"
+      cwd: "/tmp/<% ctx(my_string) %>"
       username: "nufuk"
     next:
       - when: <% succeeded() %>
@@ -41,7 +68,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "./main.py -m '<% ctx(message) %>' -c <% ctx(chat_id) %> -t '<% ctx(bot_token) %>'"
-      cwd: "/tmp/telegram-integration"
+      cwd: "/tmp/<% ctx(my_string) %>"
       username: "nufuk"
     next:
         - do: 
@@ -51,6 +78,6 @@ tasks:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "rm -rf ./telegram-integration"
+      cmd: "rm -rf ./<% ctx(my_string) %>"
       cwd: "/tmp/"
       username: "nufuk"

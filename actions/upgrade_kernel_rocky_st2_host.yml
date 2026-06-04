@@ -9,3 +9,12 @@ parameters:
     required: true
     type: string
     default: "{{ st2kv.system.st2_host }}"
+  username:
+    required: true
+    type: string
+    default: "{{ st2kv.system.user }}"
+  sudo_password:
+    required: true
+    secret: true
+    type: string
+    default: "{{ st2kv.system.sudo_password| decrypt_kv }}"

@@ -14,7 +14,12 @@ tasks:
       env:
         StrictHostKeyChecking: "accept-new"
     next:
-      - do: sudo_update
+      - when: <% succeeded() %>
+        do: 
+          - sudo_update
+      - when: <% failed() %>
+        do:
+          - send_failed 
 
   sudo_update:
     action: core.remote_sudo
@@ -27,7 +32,12 @@ tasks:
         StrictHostKeyChecking: "accept-new"
       timeout: 1800
     next:
-      - do: sudo_upgrade_kernel
+      - when: <% succeeded() %>
+        do: 
+          - sudo_upgrade_kernel
+      - when: <% failed() %>
+        do:
+          - send_failed 
 
   sudo_upgrade_kernel:
     action: core.remote_sudo
@@ -40,7 +50,13 @@ tasks:
         StrictHostKeyChecking: "accept-new"
       timeout: 1800
     next:
-      - do: sudo_reboot
+      - when: <% succeeded() %>
+        do: 
+          - sudo_reboot
+      - when: <% failed() %>
+        do:
+          - send_failed 
+    
 
   sudo_reboot:
     action: core.remote_sudo
@@ -53,7 +69,12 @@ tasks:
         StrictHostKeyChecking: "accept-new"
       timeout: 1800
     next:
-      - do: check_kernel
+      - when: <% succeeded() %>
+        do: 
+          - check_kernel
+      - when: <% failed() %>
+        do:
+          - send_failed 
 
   check_kernel:
     action: core.remote
@@ -64,3 +85,20 @@ tasks:
       username: <% ctx(username) %>
       env:
         StrictHostKeyChecking: "accept-new"
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - send_success
+      - when: <% failed() %>
+        do:
+          - send_failed 
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "Kernel upgrade failed on Debian Server: <% ctx(host) %> with error: <% result().stderr %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "Kernel upgrade successfull on Debian Server: <% ctx(host) %>"

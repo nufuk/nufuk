@@ -17,3 +17,20 @@ tasks:
       env:
         StrictHostKeyChecking: "accept-new"
       timeout: 1800
+    next:
+      - when: <% succeeded() %>
+        do: 
+          - send_success
+      - when: <% failed() %>
+        do:
+          - send_failed
+
+  send_failed:
+    action: nufuk.telegram_message
+    input:
+      message: "Package upgrade failed on Debian Server: <% ctx(hosts) %> with error: <% result().stderr %>"
+  
+  send_success:
+    action: nufuk.telegram_message
+    input:
+      message: "Package upgrade successfull on Debian Server: <% ctx(hosts) %>"
