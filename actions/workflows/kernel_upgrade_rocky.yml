@@ -11,6 +11,8 @@ tasks:
       hosts: <% ctx(host) %>
       cmd: "uname -r"
       username: <% ctx(username) %>
+      env:
+        StrictHostKeyChecking: accept-new
     next:
       - do: sudo_upgrade_kernel
 
@@ -21,6 +23,8 @@ tasks:
       cmd: "yum update kernel -y"
       sudo_password: <% ctx(sudo_password) %>
       username: <% ctx(username) %>
+      env:
+        StrictHostKeyChecking: accept-new
       timeout: 1800
     next:
       - do: sudo_reboot
@@ -32,13 +36,17 @@ tasks:
       cmd: "reboot; exit 0;"
       sudo_password: <% ctx(sudo_password) %>
       username: <% ctx(username) %>
+      env:
+        StrictHostKeyChecking: accept-new
       timeout: 1800
     next:
       - do: sudo_check_kernel
 
   sudo_check_kernel:
     action: core.remote
-    delay: 120
+    env:
+        StrictHostKeyChecking: accept-new
+    delay: 240
     input:
       hosts: <% ctx(host) %>
       cmd: "uname -r"
