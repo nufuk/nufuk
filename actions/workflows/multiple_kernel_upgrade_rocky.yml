@@ -1,0 +1,10 @@
+version: 1.0
+description: Iterate over an array of server to trigger the Kernel upgrade for Rocky Linux
+input: 
+  - hosts
+tasks:
+  iterate_server_list:
+    with:
+      items: <% ctx(hosts) %>
+      concurrency: 5
+    action: nufuk.kernel_upgrade_rocky hosts=<% item() %>

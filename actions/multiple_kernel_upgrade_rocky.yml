@@ -1,0 +1,11 @@
+---
+name: multiple_kernel_upgrade_rocky
+description: trigger the Rocky Kernel upgrade for all without the host
+runner_type: orquesta
+entry_point: workflows/kernel_upgrade_rocky.yml
+enabled: true
+parameters:
+  host:
+    required: true
+    type: string
+    default: "{{ st2kv.system.rocky_server_without_host }}"

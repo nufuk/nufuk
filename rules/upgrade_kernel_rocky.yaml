@@ -1,0 +1,29 @@
+---
+uid: rule:nufuk:multiple_kernel_upgrade_rocky
+name: multiple_kernel_upgrade_rocky
+ref: nufuk.multiple_kernel_upgrade_rocky
+description: upgrades the Debian Kernel once a month
+pack: nufuk
+type:
+  ref: standard
+  parameters: {}
+trigger:
+  type: core.st2.CronTimer
+  parameters:
+    day: '*'
+    day_of_week: '0'
+    hour: '4'
+    minute: '0'
+    month: '*'
+    second: '0'
+    timezone: 'CET'
+    week: '4'
+    year: '*'
+  description: Triggers whenever current time matches the specified time constaints like a UNIX cron scheduler.
+criteria: {}
+action:
+  ref: nufuk.multiple_kernel_upgrade_rocky
+  description: nufuk multiple_kernel_upgrade_rocky
+  parameters:
+    hosts: ''
+enabled: true
