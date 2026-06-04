@@ -10,8 +10,8 @@ tasks:
     action: core.echo message=<% item() %>
     next:
       - do: iterate_server_list
-  iterate_server_list:
-    with:
-      items: <% ctx(hosts) %>
-      concurrency: 5
-    action: nufuk.kernel_upgrade_rocky host=<% item() %>
+#  iterate_server_list:
+#    with:
+#      items: <% ctx(hosts) %>
+#      concurrency: 5
+#    action: nufuk.kernel_upgrade_rocky host=<% item() %>
