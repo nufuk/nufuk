@@ -5,7 +5,7 @@ input:
   - username
   - sudo_password
 tasks:
-  print_out_payload:
+  check_kernel_before:
     action: core.remote
     input:
       hosts: <% ctx(host) %>

@@ -8,4 +8,3 @@ tasks:
       items: <% ctx(hosts) %>
       concurrency: 5
     action: nufuk.kernel_upgrade_debian host=<% item() %>
-
