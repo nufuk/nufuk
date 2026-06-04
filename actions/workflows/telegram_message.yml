@@ -17,9 +17,6 @@ tasks:
       - when: <% succeeded() %>
         do: 
           - create_random_number
-      - when: <% failed() %>
-        do: 
-          - cleanup
     
   create_random_number:
     action: core.noop
