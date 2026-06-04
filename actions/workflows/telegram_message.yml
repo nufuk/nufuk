@@ -7,7 +7,7 @@ input:
   - server_ip
 
 vars:
-  - my_string
+  - my_string: "lorem ipsum"
 
 tasks:
   checkout_project:
