@@ -21,17 +21,17 @@ tasks:
       - when: <% succeeded() %>
         do: 
           - generate_string
-  
+
   generate_string:
     action: core.local
     input:
-      cmd: "python3 -c 'import secrets; print(secrets.token_hex(16))'"
+      cmd: python3 -c 'import secrets; print(secrets.token_hex(16))'
     next:
       - when: <% succeeded() %>
-        do: 
+        do:
           - move_folder
-      - publish:
-          - my_string: <% result().stdout.strip() %>
+        publish:
+          - my_string: <% result().stdout %>
 
   move_folder:
     action: core.remote
