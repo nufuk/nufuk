@@ -7,7 +7,7 @@ input:
   - server_ip
 
 vars:
-  - random_num: 1234
+  - my_string
 
 tasks:
   checkout_project:
@@ -20,22 +20,24 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: 
-          - create_random_number
-    
-  create_random_number:
-    action: core.noop
+          - generate_string
+  
+  generate_string:
+    action: core.local
+    input:
+      cmd: "python3 -c 'import secrets; print(secrets.token_hex(16))'"
     next:
       - when: <% succeeded() %>
         do: 
           - move_folder
-        publish:
-          - random_num: <% random(65536) %>
+      - publish:
+          - my_string: <% result().stdout.strip() %>
 
   move_folder:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "mv telegram-integration <% ctx(random_num) %>"
+      cmd: "mv telegram-integration <% ctx(my_string) %>"
       cwd: "/tmp/"
       username: "nufuk"
     next:
@@ -51,7 +53,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "./install.sh"
-      cwd: "/tmp/<% ctx(random_num) %>"
+      cwd: "/tmp/<% ctx(my_string) %>"
       username: "nufuk"
     next:
       - when: <% succeeded() %>
@@ -66,7 +68,7 @@ tasks:
     input:
       hosts: <% ctx(server_ip) %>
       cmd: "./main.py -m '<% ctx(message) %>' -c <% ctx(chat_id) %> -t '<% ctx(bot_token) %>'"
-      cwd: "/tmp/<% ctx(random_num) %>"
+      cwd: "/tmp/<% ctx(my_string) %>"
       username: "nufuk"
     next:
         - do: 
@@ -76,6 +78,6 @@ tasks:
     action: core.remote
     input:
       hosts: <% ctx(server_ip) %>
-      cmd: "rm -rf ./<% ctx(random_num) %>"
+      cmd: "rm -rf ./<% ctx(my_string) %>"
       cwd: "/tmp/"
       username: "nufuk"
