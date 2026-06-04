@@ -7,7 +7,7 @@ input:
   - server_ip
 
 vars:
-  - random_num: 0
+  - random_num: 1234
 
 tasks:
   checkout_project:
