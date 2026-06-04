@@ -5,7 +5,7 @@ runner_type: orquesta
 entry_point: workflows/kernel_upgrade_rocky.yml
 enabled: true
 parameters:
-  host:
+  hosts:
     required: true
-    type: string
+    type: array
     default: "{{ st2kv.system.rocky_server_without_host }}"

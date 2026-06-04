@@ -7,5 +7,5 @@ enabled: true
 parameters:
   hosts:
     required: true
-    type: string
+    type: array
     default: "{{ st2kv.system.debian_server }}"
