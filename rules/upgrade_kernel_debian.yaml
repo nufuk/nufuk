@@ -1,7 +1,7 @@
 ---
-uid: rule:nufuk:kernel_upgrade_debian
-name: kernel_upgrade_debian
-ref: nufuk.kernel_upgrade_debian
+uid: rule:nufuk:multiple_kernel_upgrade_debian
+name: multiple_kernel_upgrade_debian
+ref: nufuk.multiple_kernel_upgrade_debian
 description: upgrades the Debian Kernel once a month
 pack: nufuk
 type:
@@ -22,8 +22,8 @@ trigger:
   description: Triggers whenever current time matches the specified time constaints like a UNIX cron scheduler.
 criteria: {}
 action:
-  ref: nufuk.kernel_upgrade_debian
-  description: nufuk kernel_upgrade_debian
+  ref: nufuk.multiple_kernel_upgrade_debian
+  description: nufuk multiple_kernel_upgrade_debian
   parameters:
-    grafana_data: ''
+    hosts: "{{ st2kv.system.debian_server }}"
 enabled: true

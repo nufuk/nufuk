@@ -1,5 +1,5 @@
 version: 1.0
-description: Iterate over an array of server to trigger the Kernel upgrade for Rocky Linux
+description: Iterate over an array of server to trigger the Kernel upgrade for Debian Linux
 input: 
   - hosts
 tasks:

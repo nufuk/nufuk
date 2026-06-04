@@ -25,5 +25,5 @@ action:
   ref: nufuk.upgrade_kernel_rocky_st2_host
   description: nufuk upgrade_kernel_rocky_st2_host
   parameters:
-    hosts: ''
+    host: ''
 enabled: true

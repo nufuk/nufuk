@@ -25,5 +25,5 @@ action:
   ref: nufuk.multiple_kernel_upgrade_rocky
   description: nufuk multiple_kernel_upgrade_rocky
   parameters:
-    hosts: ''
+    hosts: "{{ st2kv.system.rocky_server_without_host }}"
 enabled: true
