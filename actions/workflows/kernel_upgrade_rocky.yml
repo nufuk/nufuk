@@ -40,14 +40,14 @@ tasks:
         StrictHostKeyChecking: "accept-new"
       timeout: 1800
     next:
-      - do: sudo_check_kernel
+      - do: check_kernel
 
-  sudo_check_kernel:
+  check_kernel:
     action: core.remote
-    env:
-        StrictHostKeyChecking: "accept-new"
     delay: 240
     input:
       hosts: <% ctx(host) %>
       cmd: "uname -r"
       username: <% ctx(username) %>
+      env:
+        StrictHostKeyChecking: "accept-new"
