@@ -1,0 +1,45 @@
+version: 1.0
+description: Upgrade Kernel Rocky, use this workflow for a single server inside a wrapper for many server
+input: 
+  - host
+  - username
+  - sudo_password
+tasks:
+  print_out_payload:
+    action: core.remote
+    input:
+      hosts: <% ctx(host) %>
+      cmd: "uname -r"
+      username: <% ctx(username) %>
+    next:
+      - do: sudo_upgrade_kernel
+
+  sudo_upgrade_kernel:
+    action: core.remote_sudo
+    input:
+      hosts: <% ctx(host) %>
+      cmd: "yum update kernel -y"
+      sudo_password: <% ctx(sudo_password) %>
+      username: <% ctx(username) %>
+      timeout: 1800
+    next:
+      - do: sudo_reboot
+
+  sudo_reboot:
+    action: core.remote_sudo
+    input:
+      hosts: <% ctx(host) %>
+      cmd: "reboot; exit 0;"
+      sudo_password: <% ctx(sudo_password) %>
+      username: <% ctx(username) %>
+      timeout: 1800
+    next:
+      - do: sudo_check_kernel
+
+  sudo_check_kernel:
+    action: core.remote
+    delay: 120
+    input:
+      hosts: <% ctx(host) %>
+      cmd: "uname -r"
+      username: <% ctx(username) %>
