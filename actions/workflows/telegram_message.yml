@@ -5,6 +5,10 @@ input:
   - chat_id
   - bot_token
   - server_ip
+
+vars:
+  - random_num
+
 tasks:
   checkout_project:
     action: core.remote
@@ -26,9 +30,6 @@ tasks:
       - when: <% succeeded() %>
         do: 
           - move_folder
-      - when: <% failed() %>
-        do: 
-          - cleanup
 
   move_folder:
     action: core.remote
