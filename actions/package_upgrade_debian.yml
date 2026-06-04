@@ -5,9 +5,9 @@ runner_type: orquesta
 entry_point: workflows/package_upgrade_debian.yml
 enabled: true
 parameters:
-  host:
+  hosts:
     required: true
-    type: string
+    type: array
     default: "{{ st2kv.system.debian_server }}"
   username:
     required: true

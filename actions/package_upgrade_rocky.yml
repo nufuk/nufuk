@@ -7,7 +7,7 @@ enabled: true
 parameters:
   hosts:
     required: true
-    type: string
+    type: array
     default: "{{ st2kv.system.rocky_server }}"
   username:
     required: true
