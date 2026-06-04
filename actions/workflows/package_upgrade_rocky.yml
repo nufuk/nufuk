@@ -8,7 +8,6 @@ tasks:
 
   sudo_upgrade:
     with: <% ctx(hosts) %>
-    concurrency: 5
     action: core.remote_sudo
     input:
       hosts: <% item() %>
