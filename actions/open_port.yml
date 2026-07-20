@@ -23,6 +23,10 @@ parameters:
   server_ip:
     required: true
     type: string
+  protocol:
+    required: true
+    type: string
+    default: "TCP"
   description:
     required: true
     type: string
